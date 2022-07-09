@@ -27,9 +27,9 @@ the length of the longest substring with all distinct characters
 function findLongestSubstring(s = "") {
   if (!s) return 0;
   let start = 0;
-  let end = 1;
+  let end = 0;
   let long = 0;
-  let counter = { [s[0]]: 1 };
+  let counter = {};
 
   while (start < s.length) {
     if (end < s.length && !counter[s[end]]) {
@@ -46,13 +46,13 @@ function findLongestSubstring(s = "") {
 
 (function main() {
   const tests = [
-    // "",
+    "",
     "rithmschool",
-    // "thisisawesome",
-    // "thecatinthehat",
-    // "bbbbbb",
-    // "longestsubstring",
-    // "thisishowwedoit",
+    "thisisawesome",
+    "thecatinthehat",
+    "bbbbbb",
+    "longestsubstring",
+    "thisishowwedoit",
   ];
   for (const test of tests) console.log(findLongestSubstring(test));
 })();
