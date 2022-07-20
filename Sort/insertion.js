@@ -12,23 +12,22 @@
     return arr;
 } */
 
-
 function insertion(array) {
-    for (let i = 1; i < array.length; i++) {
-        for (let j = i; j > 0; j--) {
-            if (array[j] < array[j - 1]) {
-                [array[j], array[j - 1]] = [array[j - 1], array[j]]
-            }
-        }
+  for (let i = 1; i < array.length; i++) {
+    for (let j = i; j > 0; j--) {
+      if (array[j] < array[j - 1]) {
+        [array[j], array[j - 1]] = [array[j - 1], array[j]];
+      }
     }
-    return array
-};
+  }
+  return array;
+}
 
 (function main() {
-    const tests = [
-        // [9, 44, 2, 5, 213, 34, 21, 21, 1, 5, 3],
-        [-9, -44, 2, 5, -213, 34, 21, -21, 1, 5, 3],
-        // [-9, -44, 1, -90],
-    ];
-    for (const test of tests) console.log(insertion(test));
+  const tests = [
+    // [9, 44, 2, 5, 213, 34, 21, 21, 1, 5, 3],
+    [-9, -44, 2, 5, -213, 34, 21, -21, 1, 5, 3],
+    // [-9, -44, 1, -90],
+  ];
+  for (const test of tests) console.log(insertion(test));
 })();
