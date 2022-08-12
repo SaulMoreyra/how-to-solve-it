@@ -71,34 +71,36 @@ class SinglyLinkedList<T extends Object> {
     return this;
   }
 
-  get(index: number) {
+  #getNode(index: number) {
     if (index > this.length || index < 0) return null;
     let count = 0;
     let current = this.head;
     while (count !== index) {
-      current = current?.next;
+      current = current;
       count++;
     }
-    return current?.value;
+    return current;
+  }
+
+  get(index: number) {
+    const foundNode = this.#getNode(index);
+    if (foundNode) return foundNode.value;
+    return null;
   }
 
   set(index: number, value: T) {
-    if (index > this.length || index < 0) return null;
-    let count = 0;
-    let current = this.head;
-    if (index === 0) {
-      this.unshift(value);
-      return;
+    const foundNode = this.#getNode(index);
+    if (foundNode) {
+      foundNode.value = value;
+      return true;
     }
-    while (count !== index - 1) {
-      current = current?.next;
-      count++;
-    }
-    const newNode = new SimpleNode(value);
-    newNode.next = current!.next;
-    current!.next = newNode;
-    this.length++;
+    return false;
   }
+
+  // insert(index: number, value: T){
+  //   if(index < 0) return false;
+  //   if(index )
+  // }
 }
 
 (function main() {
