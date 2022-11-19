@@ -9,13 +9,13 @@ class SimpleNode<T extends Object> {
 }
 
 class SinglyLinkedList<T extends Object> {
-  head?: SimpleNode<T> | null;
-  tail?: SimpleNode<T> | null;
+  head: SimpleNode<T> | null;
+  tail: SimpleNode<T> | null;
   length: number;
 
   constructor() {
-    this.head;
-    this.tail;
+    this.head = null;
+    this.tail = null;
     this.length = 0;
   }
 
