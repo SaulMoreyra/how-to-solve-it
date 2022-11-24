@@ -9,14 +9,25 @@ class SimpleNode<T extends Object> {
 }
 
 class SinglyLinkedList<T extends Object> {
-  head?: SimpleNode<T> | null;
-  tail?: SimpleNode<T> | null;
+  head: SimpleNode<T> | null;
+  tail: SimpleNode<T> | null;
   length: number;
 
   constructor() {
-    this.head;
-    this.tail;
+    this.head = null;
+    this.tail = null;
     this.length = 0;
+  }
+
+  #getNode(index: number) {
+    if (index > this.length || index < 0) return null;
+    let count = 0;
+    let current = this.head;
+    while (count !== index) {
+      current = current;
+      count++;
+    }
+    return current;
   }
 
   push(value: T): SinglyLinkedList<T> {
@@ -71,17 +82,6 @@ class SinglyLinkedList<T extends Object> {
     return this;
   }
 
-  #getNode(index: number) {
-    if (index > this.length || index < 0) return null;
-    let count = 0;
-    let current = this.head;
-    while (count !== index) {
-      current = current;
-      count++;
-    }
-    return current;
-  }
-
   get(index: number) {
     const foundNode = this.#getNode(index);
     if (foundNode) return foundNode.value;
@@ -97,10 +97,60 @@ class SinglyLinkedList<T extends Object> {
     return false;
   }
 
-  // insert(index: number, value: T){
-  //   if(index < 0) return false;
-  //   if(index )
-  // }
+  insert(index: number, value: T) {
+    if (index < 0 || index > this.length) return false;
+    if (index === this.length) return !!this.push(value);
+    if (index === 0) return !!this.unshift(value);
+
+    const prev = this.#getNode(index - 1);
+    const next = prev?.next;
+    const newNode = new SimpleNode(value);
+
+    prev!.next = newNode;
+    newNode!.next = next!;
+
+    return true;
+  }
+
+  remove(index: number) {
+    if (index < 0 || index > this.length) return undefined;
+    if (index === this.length - 1) return this.pop();
+    if (index === 0) return !!this.shift();
+
+    const prev = this.#getNode(index - 1);
+    const removed = prev?.next;
+    prev!.next! = removed?.next!;
+
+    this.length--;
+    return removed?.value;
+  }
+
+  reverse() {
+    let node = this.head;
+    this.head = this.tail;
+    this.tail = node;
+
+    let next: SimpleNode<T>;
+    let prev: SimpleNode<T>;
+
+    for (let i = 0; i < this.length; i++) {
+      next = node?.next!;
+      node!.next = prev!;
+      prev = node!;
+      node = next;
+    }
+    return this;
+  }
+
+  toArray() {
+    const arr: Array<T> = [];
+    let current = this.head;
+    while (current) {
+      arr.push(current.value);
+      current = current.next;
+    }
+    return arr;
+  }
 }
 
 (function main() {
@@ -108,6 +158,10 @@ class SinglyLinkedList<T extends Object> {
   list.push(1);
   list.push(2);
   list.push(3);
-  list.set(0, 1000);
-  console.log(list);
+  list.push(4);
+  list.push(5);
+  list.push(6);
+  console.log(list.toArray());
+  console.log(list.reverse());
+  console.log(list.toArray());
 })();
