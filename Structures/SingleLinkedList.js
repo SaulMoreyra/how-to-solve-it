@@ -1,17 +1,17 @@
-class SimpleNode<T extends Object> {
-  value: T;
-  next: SimpleNode<T> | null;
+class SimpleNode {
+  value;
+  next;
 
-  constructor(value: T) {
+  constructor(value) {
     this.value = value;
     this.next = null;
   }
 }
 
-class SinglyLinkedList<T extends Object> {
-  head: SimpleNode<T> | null;
-  tail: SimpleNode<T> | null;
-  length: number;
+class SinglyLinkedList {
+  head;
+  tail;
+  length;
 
   constructor() {
     this.head = null;
@@ -19,7 +19,7 @@ class SinglyLinkedList<T extends Object> {
     this.length = 0;
   }
 
-  #getNode(index: number) {
+  #getNode(index) {
     if (index > this.length || index < 0) return null;
     let count = 0;
     let current = this.head;
@@ -30,7 +30,7 @@ class SinglyLinkedList<T extends Object> {
     return current;
   }
 
-  push(value: T): SinglyLinkedList<T> {
+  push(value) {
     const node = new SimpleNode(value);
     if (this.tail) {
       this.tail.next = node;
@@ -53,7 +53,7 @@ class SinglyLinkedList<T extends Object> {
       current = current.next;
     }
     this.tail = newTail;
-    this.tail!.next = null;
+    this.tail.next = null;
     this.length--;
 
     if (this.length === 0) {
@@ -72,7 +72,7 @@ class SinglyLinkedList<T extends Object> {
     return current.value;
   }
 
-  unshift(value: T) {
+  unshift(value) {
     const current = new SimpleNode(value);
     if (!this.head) this.tail = current;
     else current.next = this.head;
@@ -82,13 +82,13 @@ class SinglyLinkedList<T extends Object> {
     return this;
   }
 
-  get(index: number) {
+  get(index) {
     const foundNode = this.#getNode(index);
     if (foundNode) return foundNode.value;
     return null;
   }
 
-  set(index: number, value: T) {
+  set(index, value) {
     const foundNode = this.#getNode(index);
     if (foundNode) {
       foundNode.value = value;
@@ -97,7 +97,7 @@ class SinglyLinkedList<T extends Object> {
     return false;
   }
 
-  insert(index: number, value: T) {
+  insert(index, value) {
     if (index < 0 || index > this.length) return false;
     if (index === this.length) return !!this.push(value);
     if (index === 0) return !!this.unshift(value);
@@ -106,20 +106,20 @@ class SinglyLinkedList<T extends Object> {
     const next = prev?.next;
     const newNode = new SimpleNode(value);
 
-    prev!.next = newNode;
-    newNode!.next = next!;
+    prev.next = newNode;
+    newNode.next = next;
 
     return true;
   }
 
-  remove(index: number) {
+  remove(index) {
     if (index < 0 || index > this.length) return undefined;
     if (index === this.length - 1) return this.pop();
     if (index === 0) return !!this.shift();
 
     const prev = this.#getNode(index - 1);
-    const removed = prev?.next;
-    prev!.next! = removed?.next!;
+    const removed = prev.next;
+    prev.next = removed.next;
 
     this.length--;
     return removed?.value;
@@ -130,20 +130,20 @@ class SinglyLinkedList<T extends Object> {
     this.head = this.tail;
     this.tail = node;
 
-    let next: SimpleNode<T>;
-    let prev: SimpleNode<T>;
+    let next;
+    let prev;
 
     for (let i = 0; i < this.length; i++) {
-      next = node?.next!;
-      node!.next = prev!;
-      prev = node!;
+      next = node.next;
+      node.next = prev;
+      prev = node;
       node = next;
     }
     return this;
   }
 
   toArray() {
-    const arr: Array<T> = [];
+    const arr = [];
     let current = this.head;
     while (current) {
       arr.push(current.value);
@@ -154,7 +154,7 @@ class SinglyLinkedList<T extends Object> {
 }
 
 (function main() {
-  const list = new SinglyLinkedList<number>();
+  const list = new SinglyLinkedList();
   list.push(1);
   list.push(2);
   list.push(3);
