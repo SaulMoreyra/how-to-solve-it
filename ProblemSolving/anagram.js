@@ -7,7 +7,7 @@ function anagram(s) {
         v1[s[i]] ? v1[s[i]] += 1 : v1[s[i]] = 1;
         v2[s[s.length - i - 1]] ? v2[s[s.length - i - 1]] += 1 : v2[s[s.length - i - 1]] = 1
     }
-
 }
 
 console.log(anagram("aaabbb"))
+console.log(anagram("aaabbbc"))
